@@ -1,0 +1,11 @@
+{
+    "name": "parthvora777/laraveltimeago",
+    "description": "A Laravel package to show a time in \"Ago\" format",
+    "authors": [
+        {
+            "name": "Parth Vora",
+            "email": "parth.vora.777@gmail.com"
+        }
+    ],
+    "require": {}
+}
