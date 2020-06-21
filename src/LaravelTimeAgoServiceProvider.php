@@ -27,11 +27,11 @@ class LaravelTimeAgoServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::directive('timeago', function ($datetime) {
+        Blade::directive('timeago', function ($params) {
+            $params   = explode(',', $params);
+            $datetime = trim($params[0], '"');
             try {
-                $datetime = trim($datetime, '"');
-                $datetime = trim($datetime, "'");
-                $timeAgo  = Carbon::now()->diffForHumans($datetime, CarbonInterface::DIFF_ABSOLUTE, false, 5);
+                $timeAgo = Carbon::now()->diffForHumans($datetime, CarbonInterface::DIFF_ABSOLUTE, false, 5);
                 return $timeAgo;
             } catch (Exception $ex) {
                 throw new Exception($ex->getMessage());
