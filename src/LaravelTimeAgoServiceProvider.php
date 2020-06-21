@@ -4,6 +4,7 @@ namespace ParthVora777\LaravelTimeAgo;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Exception;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,10 +28,14 @@ class LaravelTimeAgoServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::directive('timeago', function ($datetime) {
-            $datetime = trim($datetime, '"');
-            $datetime = trim($datetime, "'");
-            $timeAgo  = Carbon::parse($datetime)->diffForHumans(CarbonInterface::DIFF_RELATIVE_AUTO, false, 6);
-            return $timeAgo;
+            try {
+                $datetime = trim($datetime, '"');
+                $datetime = trim($datetime, "'");
+                $timeAgo  = Carbon::now()->diffForHumans($datetime, CarbonInterface::DIFF_ABSOLUTE, false, 5);
+                return $timeAgo;
+            } catch (Exception $ex) {
+                throw new Exception($ex->getMessage());
+            }
         });
     }
 }
